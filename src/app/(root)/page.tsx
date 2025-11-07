@@ -1,7 +1,9 @@
 export default function Home() {
   return (
-   <div>
-Home
-   </div>
+    <section className="home">
+      <div className="home-content">
+        <header className="home-header">Welcom, User</header>
+      </div>
+    </section>
   );
 }
