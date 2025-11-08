@@ -1,13 +1,75 @@
-@layer utilities {
-  .home {
-    @apply flex flex-row max-xl:max-h-screen max-xl:overflow-y-scroll;
+@utility no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
   }
+}
 
-  .home-content {
-    @apply flex flex-1 flex-col gap-8 px-5 sm:px-8 py-7 lg:py-12 xl:max-h-screen xl:overflow-y-scroll;
-  }
+@utility text-10 {
+  @apply text-[10px] leading-3.5;
+}
 
-  .home-header {
-    @apply flex flex-col justify-between gap-8;
-  }
+@utility text-12 {
+  @apply text-[12px] leading-4;
+}
+
+@utility text-14 {
+  @apply text-[14px] leading-5;
+}
+
+@utility text-16 {
+  @apply text-[16px] leading-6;
+}
+
+@utility text-18 {
+  @apply text-[18px] leading-[22px];
+}
+
+@utility text-20 {
+  @apply text-[20px] leading-6;
+}
+
+@utility text-24 {
+  @apply text-[24px] leading-[30px];
+}
+
+@utility text-26 {
+  @apply text-[26px] leading-8;
+}
+
+@utility text-30 {
+  @apply text-[30px] leading-[38px];
+}
+
+@utility text-36 {
+  @apply text-[36px] leading-11;
+}
+
+@utility bg-bank-gradient {
+  background-image: linear-gradient(90deg, #0179fe 0%, #4893ff 100%);
+}
+
+@utility bg-gradient-mesh {
+  background-image: url("/icons/gradient-mesh.svg");
+}
+
+@utility bg-bank-green-gradient {
+  background-image: linear-gradient(90deg, #01797a 0%, #489399 100%);
+}
+
+@utility shadow-form {
+  box-shadow: var(--shadow-form);
+}
+
+@utility shadow-chart {
+  box-shadow: var(--shadow-chart);
+}
+
+@utility shadow-profile {
+  box-shadow: var(--shadow-profile);
+}
+
+@utility shadow-creditCard {
+  box-shadow: var(--shadow-creditCard);
 }

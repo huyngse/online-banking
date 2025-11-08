@@ -1,0 +1,39 @@
+@layer components {
+  .container {
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    width: 100%;
+  }
+
+  @media (min-width: 1536px) {
+    .container {
+      max-width: 1400px;
+    }
+  }
+
+  .home {
+    @apply no-scrollbar flex flex-row max-xl:max-h-screen max-xl:overflow-y-scroll;
+  }
+
+  .home-content {
+    @apply no-scrollbar flex flex-1 flex-col gap-8 px-5 sm:px-8 py-7 lg:py-12 xl:max-h-screen xl:overflow-y-scroll;
+  }
+
+  .home-header {
+    @apply flex flex-col justify-between gap-8;
+  }
+
+  .header-box {
+    @apply flex flex-col gap-1;
+  }
+
+  .header-box-title {
+    @apply text-24 lg:text-30 font-semibold text-gray-900;
+  }
+
+  .header-box-subtext {
+    @apply text-14 lg:text-16 font-normal text-gray-600;
+  }
+}

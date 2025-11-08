@@ -15,3 +15,10 @@ declare type SignUpParams = {
     email: string;
     password: string;
 }
+
+declare interface HeaderBoxProps {
+    type?: "title" | "greeting";
+    title: string;
+    user: string;
+    subtext?: string;
+}
