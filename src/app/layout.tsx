@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   title: "Vertico",
   description: "Vertico is a modern banking platform for everyone",
   icons: {
-    icon: "/icons/logo.ico"
+    icon: "/icons/logo.svg"
   }
 };
 

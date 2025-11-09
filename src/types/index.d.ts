@@ -22,3 +22,13 @@ declare interface HeaderBoxProps {
     user: string;
     subtext?: string;
 }
+
+declare interface TotalBalanceBoxProps {
+    accounts: Account[];
+    totalBanks: number;
+    totalCurrentBalance: number;
+}
+
+declare interface DoughnutChartProps {
+    accounts: Account[];
+}

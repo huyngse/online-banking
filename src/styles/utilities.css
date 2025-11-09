@@ -6,6 +6,14 @@
   }
 }
 
+@utility flex-center {
+  @apply flex items-center justify-center;
+}
+
+@utility header-2 {
+  @apply text-18 font-semibold text-gray-900;
+}
+
 @utility text-10 {
   @apply text-[10px] leading-3.5;
 }
