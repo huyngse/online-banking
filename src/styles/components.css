@@ -13,6 +13,10 @@
     }
   }
 
+  .root-layout {
+    @apply flex h-16 items-center justify-between p-5 shadow-creditCard sm:p-8 md:hidden;
+  }
+
   .home {
     @apply no-scrollbar flex flex-row max-xl:max-h-screen max-xl:overflow-y-scroll;
   }
@@ -42,14 +46,38 @@
   }
 
   .total-balance-chart {
-    @apply flex size-full max-w-[100px] items-center sm:max-w-[120px]
+    @apply flex size-full max-w-[100px] items-center sm:max-w-[120px];
   }
 
   .total-balance-label {
-    @apply text-14 font-medium text-gray-600
+    @apply text-14 font-medium text-gray-600;
   }
 
   .total-balance-amount {
-    @apply text-24 lg:text-30 flex-1 font-semibold text-shadow-gray-900
+    @apply text-24 lg:text-30 flex-1 font-semibold text-shadow-gray-900;
+  }
+
+  .sidebar {
+    @apply sticky left-0 top-0 flex h-screen w-fit flex-col justify-between border-r border-gray-200 bg-white pt-8 text-white max-md:hidden sm:p-4 xl:p-6 2xl:w-[355px] shrink-0;
+  }
+
+  .sidebar-logo {
+    @apply 2xl:text-26 font-ibm-plex-serif text-[26px] font-bold text-black-1 max-xl:hidden;
+  }
+
+  .sidebar-link {
+    @apply flex gap-3 items-center py-1 md:p-3 2xl:p-4 rounded-lg justify-center xl:justify-start;
+  }
+
+  .sidebar-label {
+    @apply text-16 font-semibold text-black-2 max-xl:hidden;
+  }
+
+  .mobilenav-sheet {
+    @apply flex h-[calc(100vh-72px)] flex-col justify-between overflow-y-auto;
+  }
+
+  .mobilenav-sheet_close {
+    @apply flex gap-3 items-center p-4 rounded-lg w-full max-w-60;
   }
 }
