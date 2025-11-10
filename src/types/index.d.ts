@@ -15,6 +15,50 @@ declare type User = {
     ssn: string;
 }
 
+declare type Account = {
+    id: string;
+    availableBalance: number;
+    currentBalance: number;
+    officialName: string;
+    mask: string;
+    institutionId: string;
+    name: string;
+    type: string;
+    subtype: string;
+    u: string;
+    shareableId: string;
+}
+
+declare type Transaction = {
+    id: string;
+    $id: string;
+    name: string;
+    paymentChannel: string;
+    type: string;
+    accountId: string;
+    amount: number;
+    pending: boolean;
+    category: string;
+    date: string;
+    image: string;
+    $createdAt: string;
+    channel: string;
+    senderBankId: string;
+    receiverBankId: string;
+}
+
+declare type Bank = {
+    $id: string;
+    accountId: string;
+    bankId: string;
+    accessToken: string;
+    fundingSourceUrl: string;
+    userId: string;
+    shareableId: string;
+}
+
+declare type AccountTypes = "depository" | "credit" | "loan" | "investment" | "other";
+
 declare type SearchParamProps = {
     params: { [key: string]: string },
     searchParams: { [key: string]: string | string[] | undefined }
@@ -56,4 +100,16 @@ declare interface SidebarProps {
 
 declare interface MobileNavProps {
     user: User
+}
+
+declare interface RightSidebarProps {
+    user: User;
+    transactions: Transaction[];
+    banks: Bank[] & Account[]
+}
+
+declare interface CreditCardProps {
+    account: Account;
+    username: string;
+    showBalance?: boolean;
 }
