@@ -1,9 +1,7 @@
-import React from 'react'
+import { ReactNode } from "react";
 
-function AuthLayout() {
-  return (
-    <div>AuthLayout</div>
-  )
+function AuthLayout({ children }: { children: ReactNode }) {
+  return <div>{children}</div>;
 }
 
-export default AuthLayout
+export default AuthLayout;
