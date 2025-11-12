@@ -69,7 +69,7 @@ const SignInForm = () => {
         <div className="flex flex-col gap-4">Plaid link</div>
       ) : (
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
             <FormField
               control={form.control}
               name="email"
@@ -100,7 +100,7 @@ const SignInForm = () => {
                 </FormItem>
               )}
             />
-            <Button type="submit" className="form-btn">
+            <Button type="submit" className="form-btn" disabled={loading}>
               {loading ? (
                 <>
                   <Loader2 size={20} className="animate-spin" />
@@ -113,6 +113,14 @@ const SignInForm = () => {
           </form>
         </Form>
       )}
+      <footer className="flex justify-center gap-1">
+        <p className="text-14 font-normal text-gray-600">
+          Don't have an account?
+        </p>
+        <Link href={"/sign-up"} className="form-link">
+          Sign up
+        </Link>
+      </footer>
     </section>
   );
 };
