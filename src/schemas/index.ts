@@ -22,8 +22,9 @@ export const signUpSchema = z.object({
     confirmPassword: z.string("Confirm password is required"),
     ssn: z.string("SSN is required")
         .regex(/^\d{3}-\d{2}-\d{4}$/, "SSN must be in the format XXX-XX-XXXX"),
-    address: z.string("Address is required").max(100, "Address is too long"),
-    state: z.string().max(100, "State name is too long").optional(),
+    address1: z.string("Address is required").max(100, "Address is too long"),
+    city: z.string("City is required").max(50, "City is too long"),
+    state: z.string("State is required").max(100, "State name is too long"),
     postalCode: z.string("Postal code is required")
         .regex(/^\d{5}(-\d{4})?$/, "Invalid postal code format"),
     dateOfBirth: z.date("Date of birth must be a valid date"),

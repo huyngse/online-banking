@@ -19,6 +19,7 @@ import { Button } from "./ui/button";
 import { signUpSchema } from "@/schemas";
 import { Loader2 } from "lucide-react";
 import { DatePickerField } from "./DatePicker";
+import { PasswordInput } from "./PasswordInput";
 
 const SignUpForm = () => {
   const [user, setUser] = useState(null);
@@ -28,7 +29,7 @@ const SignUpForm = () => {
     resolver: zodResolver(signUpSchema),
     defaultValues: {
       email: "",
-      address: "",
+      address1: "",
       confirmPassword: "",
       dateOfBirth: new Date("2000-01-01"),
       firstName: "",
@@ -42,10 +43,13 @@ const SignUpForm = () => {
 
   async function onSubmit(values: z.infer<typeof signUpSchema>) {
     setLoading(true);
-    console.log(values);
-    setTimeout(() => {
+    try {
+      // Sign up
+    } catch (err) {
+      console.log(err);
+    } finally {
       setLoading(false);
-    }, 1000);
+    }
   }
 
   return (
@@ -111,22 +115,6 @@ const SignUpForm = () => {
             />
             <FormField
               control={form.control}
-              name="address"
-              render={({ field }) => (
-                <FormItem className="col-span-2">
-                  <FormLabel>Address</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="Enter your specific address"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
               name="state"
               render={({ field }) => (
                 <FormItem>
@@ -146,6 +134,35 @@ const SignUpForm = () => {
                   <FormLabel>Postal Code</FormLabel>
                   <FormControl>
                     <Input placeholder="ex: 11101" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="city"
+              render={({ field }) => (
+                <FormItem className="col-span-2">
+                  <FormLabel>City</FormLabel>
+                  <FormControl>
+                    <Input placeholder="ex: New York" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="address1"
+              render={({ field }) => (
+                <FormItem className="col-span-2">
+                  <FormLabel>Address</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="Enter your specific address"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -201,7 +218,7 @@ const SignUpForm = () => {
                 <FormItem className="col-span-2">
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input
+                    <PasswordInput
                       placeholder="Enter your password"
                       type="password"
                       {...field}
@@ -218,7 +235,7 @@ const SignUpForm = () => {
                 <FormItem className="col-span-2">
                   <FormLabel>Confirm password</FormLabel>
                   <FormControl>
-                    <Input
+                    <PasswordInput
                       placeholder="Re-enter your password"
                       type="password"
                       {...field}

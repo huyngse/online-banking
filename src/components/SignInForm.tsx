@@ -18,6 +18,7 @@ import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { signInSchema } from "@/schemas";
 import { Loader2 } from "lucide-react";
+import { PasswordInput } from "./PasswordInput";
 
 const SignInForm = () => {
   const [user, setUser] = useState(null);
@@ -27,15 +28,20 @@ const SignInForm = () => {
     resolver: zodResolver(signInSchema),
     defaultValues: {
       email: "",
+      password: "",
     },
   });
 
   async function onSubmit(values: z.infer<typeof signInSchema>) {
     setLoading(true);
     console.log(values);
-    setTimeout(() => {
+    try {
+      // Sign up Appwrite
+    } catch (err) {
+      console.log(err);
+    } finally {
       setLoading(false);
-    }, 1000);
+    }
   }
 
   return (
@@ -90,7 +96,7 @@ const SignInForm = () => {
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input
+                    <PasswordInput
                       placeholder="Enter your password"
                       type="password"
                       {...field}
@@ -100,7 +106,11 @@ const SignInForm = () => {
                 </FormItem>
               )}
             />
-            <Button type="submit" className="form-btn" disabled={loading}>
+            <Button
+              type="submit"
+              className="form-btn w-full"
+              disabled={loading}
+            >
               {loading ? (
                 <>
                   <Loader2 size={20} className="animate-spin" />
