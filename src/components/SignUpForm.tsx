@@ -20,6 +20,7 @@ import { signUpSchema } from "@/schemas";
 import { Loader2 } from "lucide-react";
 import { DatePickerField } from "./DatePicker";
 import { PasswordInput } from "./PasswordInput";
+import { signUp } from "@/lib/actions/user.actions";
 
 const SignUpForm = () => {
   const [user, setUser] = useState(null);
@@ -38,13 +39,16 @@ const SignUpForm = () => {
       postalCode: "",
       ssn: "",
       state: "",
+      city: ""
     },
   });
 
   async function onSubmit(values: z.infer<typeof signUpSchema>) {
     setLoading(true);
     try {
-      // Sign up
+      const newUser = await signUp(values);
+      console.log(newUser);
+      setUser(newUser);
     } catch (err) {
       console.log(err);
     } finally {

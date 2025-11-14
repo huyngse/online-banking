@@ -19,6 +19,7 @@ import { Button } from "./ui/button";
 import { signInSchema } from "@/schemas";
 import { Loader2 } from "lucide-react";
 import { PasswordInput } from "./PasswordInput";
+import { signIn } from "@/lib/actions/user.actions";
 
 const SignInForm = () => {
   const [user, setUser] = useState(null);
@@ -36,7 +37,7 @@ const SignInForm = () => {
     setLoading(true);
     console.log(values);
     try {
-      // Sign up Appwrite
+      await signIn(values);
     } catch (err) {
       console.log(err);
     } finally {
