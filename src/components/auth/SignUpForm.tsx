@@ -13,13 +13,13 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "./ui/form";
-import { Input } from "./ui/input";
-import { Button } from "./ui/button";
+} from "../ui/form";
+import { Input } from "../ui/input";
+import { Button } from "../ui/button";
 import { signUpSchema } from "@/schemas";
 import { Loader2 } from "lucide-react";
-import { DatePickerField } from "./DatePicker";
-import { PasswordInput } from "./PasswordInput";
+import { DatePickerField } from "../shared/DatePicker";
+import { PasswordInput } from "../shared/PasswordInput";
 import { signUp } from "@/lib/actions/user.actions";
 
 const SignUpForm = () => {

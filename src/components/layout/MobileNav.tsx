@@ -12,6 +12,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
+interface MobileNavProps {
+  user: User;
+}
+
 function MobileNav({ user }: MobileNavProps) {
   const pathname = usePathname();
 
@@ -27,7 +31,10 @@ function MobileNav({ user }: MobileNavProps) {
             className="cursor-pointer"
           />
         </SheetTrigger>
-        <SheetContent side="left" className="border-none bg-white p-3 w-full max-w-[264px]">
+        <SheetContent
+          side="left"
+          className="border-none bg-white p-3 w-full max-w-[264px]"
+        >
           <SheetTitle className="sr-only">Mobile Nav</SheetTitle>
           <Link href={"/"} className="flex items-center gap-1 px-4">
             <Image

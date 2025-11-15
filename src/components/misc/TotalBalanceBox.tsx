@@ -1,5 +1,11 @@
-import AnimatedCounter from "./AnimatedCounter";
-import DoughnutChart from "./DoughnutChart";
+import AnimatedCounter from "../shared/AnimatedCounter";
+import DoughnutChart from "../charts/DoughnutChart";
+
+interface TotalBalanceBoxProps {
+  accounts: Account[];
+  totalBanks: number;
+  totalCurrentBalance: number;
+}
 
 function TotalBalanceBox({
   accounts = [],

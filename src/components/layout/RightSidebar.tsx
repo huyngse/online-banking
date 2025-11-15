@@ -1,6 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
-import CreditCard from "./CreditCard";
+import CreditCard from "../misc/CreditCard";
+import { AppwriteUser } from "@/types/appwrite";
+
+interface RightSidebarProps {
+  user: AppwriteUser;
+  transactions: Transaction[];
+  banks: Bank[] & Account[];
+}
 
 function RightSidebar({ user, transactions, banks }: RightSidebarProps) {
   return (
@@ -10,13 +17,11 @@ function RightSidebar({ user, transactions, banks }: RightSidebarProps) {
         <div className="profile">
           <div className="profile-img">
             <span className="text-5xl font-bold text-blue-500">
-              {user.firstName[0]}
+              {user.name[0]}
             </span>
           </div>
           <div className="profile-details">
-            <h1 className="profile-name">
-              {user.firstName} {user.lastName}
-            </h1>
+            <h1 className="profile-name">{user.name}</h1>
             <p className="profile-email">{user.email}</p>
           </div>
         </div>
@@ -35,7 +40,7 @@ function RightSidebar({ user, transactions, banks }: RightSidebarProps) {
               <CreditCard
                 key={banks[0].$id}
                 account={banks[0]}
-                username={`${user.firstName} ${user.lastName}`}
+                username={`${user.name}`}
                 showBalance={false}
               />
             </div>
@@ -44,7 +49,7 @@ function RightSidebar({ user, transactions, banks }: RightSidebarProps) {
                 <CreditCard
                   key={banks[1].$id}
                   account={banks[1]}
-                  username={`${user.firstName} ${user.lastName}`}
+                  username={`${user.name}`}
                   showBalance={false}
                 />
               </div>

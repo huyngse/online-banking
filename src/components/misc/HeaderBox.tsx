@@ -1,3 +1,10 @@
+interface HeaderBoxProps {
+  type?: "title" | "greeting";
+  title: string;
+  user: string;
+  subtext?: string;
+}
+
 function HeaderBox({ type = "title", title, user, subtext }: HeaderBoxProps) {
   return (
     <div className="header-box">

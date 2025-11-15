@@ -5,6 +5,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
+interface SidebarProps {
+  user: User;
+}
+
 function Sidebar({ user }: SidebarProps) {
   const pathname = usePathname();
 

@@ -7,9 +7,18 @@ import { ID } from "node-appwrite"
 import { cookies } from "next/headers"
 import { parseStringify } from "../utils"
 
+const APPWRITE_SESSION_COOKIE = "appwrite-session";
+
 export const signIn = async (data: z.infer<typeof signInSchema>) => {
     const { account } = await createAdminClient();
     const response = await account.createEmailPasswordSession(data);
+
+    (await cookies()).set(APPWRITE_SESSION_COOKIE, response.secret, {
+        path: "/",
+        httpOnly: true,
+        sameSite: "strict",
+        secure: true,
+    });
     return parseStringify(response);
 }
 
@@ -26,7 +35,7 @@ export const signUp = async (data: z.infer<typeof signUpSchema>) => {
             email: data.email,
             password: data.password,
         });
-        (await cookies()).set("appwrite-session", session.secret, {
+        (await cookies()).set(APPWRITE_SESSION_COOKIE, session.secret, {
             path: "/",
             httpOnly: true,
             sameSite: "strict",
@@ -47,4 +56,10 @@ export async function getLoggedInUser() {
     } catch (error) {
         return null;
     }
+}
+
+export async function logout() {
+    const { account } = await createSessionClient();
+    (await cookies()).delete(APPWRITE_SESSION_COOKIE);
+    await account.deleteSession({ sessionId: "current" });
 }

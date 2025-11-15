@@ -2,6 +2,12 @@ import { formatAmount } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 
+interface CreditCardProps {
+  account: Account;
+  username: string;
+  showBalance?: boolean;
+}
+
 function CreditCard({
   account,
   username,
@@ -25,7 +31,8 @@ function CreditCard({
               <h2 className="text-12 font-semibold text-white">●● / ●●</h2>
             </div>
             <p className="text-14 font-semibold traking-[1.1px] text-white">
-              ●●●● ●●●● ●●●● <span className="text-16">{account.mask || 1234}</span>
+              ●●●● ●●●● ●●●●{" "}
+              <span className="text-16">{account.mask || 1234}</span>
             </p>
           </article>
         </div>

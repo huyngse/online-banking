@@ -1,5 +1,5 @@
-import MobileNav from "@/components/MobileNav";
-import Sidebar from "@/components/Sidebar";
+import MobileNav from "@/components/layout/MobileNav";
+import Sidebar from "@/components/layout/Sidebar";
 import Image from "next/image";
 import { ReactNode } from "react";
 

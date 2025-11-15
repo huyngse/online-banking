@@ -13,12 +13,12 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "./ui/form";
-import { Input } from "./ui/input";
-import { Button } from "./ui/button";
+} from "../ui/form";
+import { Input } from "../ui/input";
+import { Button } from "../ui/button";
 import { signInSchema } from "@/schemas";
 import { Loader2 } from "lucide-react";
-import { PasswordInput } from "./PasswordInput";
+import { PasswordInput } from "../shared/PasswordInput";
 import { signIn } from "@/lib/actions/user.actions";
 import { useRouter } from "next/navigation";
 

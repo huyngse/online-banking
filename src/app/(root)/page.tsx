@@ -1,13 +1,17 @@
-import HeaderBox from "@/components/HeaderBox";
-import RightSidebar from "@/components/RightSidebar";
-import TotalBalanceBox from "@/components/TotalBalanceBox";
+import HeaderBox from "@/components/misc/HeaderBox";
+import RightSidebar from "@/components/layout/RightSidebar";
+import TotalBalanceBox from "@/components/misc/TotalBalanceBox";
+import { getLoggedInUser } from "@/lib/actions/user.actions";
+import { AppwriteUser } from "@/types/appwrite";
+import { redirect } from "next/navigation";
 
-export default function Home() {
-  const loggedIn: User = {
-    firstName: "John",
-    lastName: "Doe",
-    email: "johndoe@example.com",
-  };
+export default async function Home() {
+  const loggedIn: AppwriteUser | null = await getLoggedInUser();
+
+  if (!loggedIn) {
+    return redirect("/sign-in");
+  }
+
   return (
     <section className="home">
       <div className="no-scrollbar home-content">
@@ -15,7 +19,7 @@ export default function Home() {
           <HeaderBox
             type="greeting"
             title="Welcome"
-            user={loggedIn?.firstName || "Guest"}
+            user={loggedIn?.name.split(/\s+/)[0] || "Guest"}
             subtext="Access and manage your account and transaction efficiently."
           />
           <TotalBalanceBox

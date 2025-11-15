@@ -9,6 +9,10 @@ import {
 import { Doughnut } from "react-chartjs-2";
 ChartJS.register(ArcElement, Tooltip, Legend);
 
+interface DoughnutChartProps {
+  accounts: Account[];
+}
+
 function DoughnutChart({ accounts }: DoughnutChartProps) {
   const data: ChartData<"doughnut", number[], any> = {
     datasets: [
