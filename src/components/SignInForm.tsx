@@ -20,10 +20,12 @@ import { signInSchema } from "@/schemas";
 import { Loader2 } from "lucide-react";
 import { PasswordInput } from "./PasswordInput";
 import { signIn } from "@/lib/actions/user.actions";
+import { useRouter } from "next/navigation";
 
 const SignInForm = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof signInSchema>>({
     resolver: zodResolver(signInSchema),
@@ -35,11 +37,16 @@ const SignInForm = () => {
 
   async function onSubmit(values: z.infer<typeof signInSchema>) {
     setLoading(true);
-    console.log(values);
     try {
-      await signIn(values);
+      const response = await signIn(values);
+      if (response) router.push("/");
     } catch (err) {
       console.log(err);
+      if (err instanceof Error) {
+        form.setError("password", {
+          message: err.message || "Something went wrong",
+        });
+      }
     } finally {
       setLoading(false);
     }

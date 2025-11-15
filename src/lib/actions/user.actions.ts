@@ -8,11 +8,9 @@ import { cookies } from "next/headers"
 import { parseStringify } from "../utils"
 
 export const signIn = async (data: z.infer<typeof signInSchema>) => {
-    try {
-
-    } catch (err) {
-        console.log(err)
-    }
+    const { account } = await createAdminClient();
+    const response = await account.createEmailPasswordSession(data);
+    return parseStringify(response);
 }
 
 export const signUp = async (data: z.infer<typeof signUpSchema>) => {
@@ -34,7 +32,7 @@ export const signUp = async (data: z.infer<typeof signUpSchema>) => {
             sameSite: "strict",
             secure: true,
         });
-        
+
         return parseStringify(newUser);
     } catch (err) {
         console.log(err)
@@ -44,7 +42,8 @@ export const signUp = async (data: z.infer<typeof signUpSchema>) => {
 export async function getLoggedInUser() {
     try {
         const { account } = await createSessionClient();
-        return await account.get();
+        const user = await account.get();
+        return parseStringify(user);
     } catch (error) {
         return null;
     }
