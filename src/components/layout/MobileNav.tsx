@@ -11,9 +11,11 @@ import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import Footer from "./Footer";
+import { AppwriteUser } from "@/types/appwrite";
 
 interface MobileNavProps {
-  user: User;
+  user: AppwriteUser;
 }
 
 function MobileNav({ user }: MobileNavProps) {
@@ -84,7 +86,7 @@ function MobileNav({ user }: MobileNavProps) {
               USER
             </nav>
           </div>
-          FOOTER
+          <Footer user={user} type="mobile"/>
         </SheetContent>
       </Sheet>
     </section>

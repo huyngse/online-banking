@@ -140,4 +140,16 @@
   .form-link {
     @apply text-14 cursor-pointer font-medium text-bankGradient;
   }
+
+  .footer {
+    @apply flex cursor-pointer items-center justify-between gap-2 py-6;
+  }
+
+  .footer_name {
+    @apply flex size-10 items-center justify-center rounded-full bg-gray-200;
+  }
+
+  .footer_email {
+    @apply flex flex-1 flex-col justify-center;
+  }
 }
