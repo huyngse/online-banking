@@ -152,4 +152,8 @@
   .footer_email {
     @apply flex flex-1 flex-col justify-center;
   }
+
+  .auth-asset {
+    @apply flex h-screen w-full sticky top-0 items-center justify-end bg-sky-1 max-lg:hidden;
+  }
 }

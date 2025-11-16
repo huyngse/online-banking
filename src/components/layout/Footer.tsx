@@ -26,7 +26,7 @@ function Footer({ user, type = "desktop" }: FooterProps) {
         </p>
       </div>
       <Image
-        src={"icons/logout.svg"}
+        src={"/icons/logout.svg"}
         alt="logout"
         width={20}
         height={20}
