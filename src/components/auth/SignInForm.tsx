@@ -21,6 +21,7 @@ import { Loader2 } from "lucide-react";
 import { PasswordInput } from "../shared/PasswordInput";
 import { signIn } from "@/lib/actions/user.actions";
 import { useRouter } from "next/navigation";
+import PlaidLink from "./PlaidLink";
 
 const SignInForm = () => {
   const [user, setUser] = useState(null);
@@ -39,9 +40,8 @@ const SignInForm = () => {
     setLoading(true);
     try {
       const response = await signIn(values);
-      if (response) router.push("/");
+      setUser(response);
     } catch (err) {
-      console.log(err);
       if (err instanceof Error) {
         form.setError("password", {
           message: err.message || "Something went wrong",
@@ -80,7 +80,9 @@ const SignInForm = () => {
         </div>
       </header>
       {user ? (
-        <div className="flex flex-col gap-4">Plaid link</div>
+        <div className="flex flex-col gap-4">
+          <PlaidLink user={user} variant="primary" />
+        </div>
       ) : (
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">

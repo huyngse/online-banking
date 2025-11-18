@@ -25,7 +25,7 @@ declare type Account = {
     name: string;
     type: string;
     subtype: string;
-    u: string;
+    appwriteItemId: string;
     shareableId: string;
 }
 
