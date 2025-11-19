@@ -16,3 +16,10 @@ export function formatAmount(amount: number): string {
 }
 
 export const parseStringify = (value: any) => JSON.parse(JSON.stringify(value));
+
+export function extractCustomerIdFromUrl(url: string) {
+  const parts = url.split("/");
+
+  const customerId = parts[parts.length - 1];
+  return customerId;
+}

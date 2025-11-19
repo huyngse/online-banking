@@ -5,12 +5,12 @@ import z from "zod"
 import { createAdminClient, createSessionClient } from "../server/appwrite"
 import { ID } from "node-appwrite"
 import { cookies } from "next/headers"
-import { parseStringify } from "../utils"
+import { extractCustomerIdFromUrl, parseStringify } from "../utils"
 import { AppwriteUser } from "@/types/appwrite"
 import { CountryCode, LinkTokenCreateRequest, ProcessorTokenCreateRequest, ProcessorTokenCreateRequestProcessorEnum, Products } from "plaid"
 import { plaidClient } from "../plaid"
 import { revalidatePath } from "next/cache"
-import { addFundingSource } from "./dwolla.actions"
+import { addFundingSource, createDwollaCustomer } from "./dwolla.actions"
 
 const APPWRITE_SESSION_COOKIE = "appwrite-session";
 const { APPWRITE_DATABASE_ID } = process.env;
@@ -29,18 +29,51 @@ export const signIn = async (data: z.infer<typeof signInSchema>) => {
 }
 
 export const signUp = async (data: z.infer<typeof signUpSchema>) => {
+
+    let newUserAccount;
     try {
-        const { account } = await createAdminClient();
-        const newUser = await account.create({
+        const { account, tablesDB } = await createAdminClient();
+
+        newUserAccount = await account.create({
             userId: ID.unique(),
             email: data.email,
             password: data.password,
             name: data.firstName + " " + data.lastName
         });
+
+        if (!newUserAccount) throw new Error("An error occured while creating new user authentication account");
+
+        const dwollaCustomerUrl = await createDwollaCustomer({
+            ...data,
+            dateOfBirth: data.dateOfBirth.toISOString(),
+            type: "personal"
+        });
+
+        if (!dwollaCustomerUrl) throw new Error("An error occured while creating Dwolla customer URL");
+
+        const dwollaCustomerId = extractCustomerIdFromUrl(dwollaCustomerUrl);
+
+        const partialData: Partial<typeof data> = { ...data };
+        delete partialData.password;
+        delete partialData.confirmPassword;
+
+        const newUser = await tablesDB.createRow({
+            databaseId: APPWRITE_DATABASE_ID!,
+            tableId: "users",
+            data: {
+                ...partialData,
+                dwollaCustomerUrl,
+                dwollaCustomerId,
+                userId: newUserAccount.$id
+            },
+            rowId: ID.unique(),
+        });
+
         const session = await account.createEmailPasswordSession({
             email: data.email,
             password: data.password,
         });
+
         (await cookies()).set(APPWRITE_SESSION_COOKIE, session.secret, {
             path: "/",
             httpOnly: true,

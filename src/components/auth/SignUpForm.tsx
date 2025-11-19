@@ -23,7 +23,7 @@ import { PasswordInput } from "../shared/PasswordInput";
 import { signUp } from "@/lib/actions/user.actions";
 
 const SignUpForm = () => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<User>();
   const [loading, setLoading] = useState(false);
 
   const form = useForm<z.infer<typeof signUpSchema>>({
