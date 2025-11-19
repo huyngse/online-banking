@@ -3,10 +3,9 @@
 import { signInSchema, signUpSchema } from "@/schemas"
 import z from "zod"
 import { createAdminClient, createSessionClient } from "../server/appwrite"
-import { ID } from "node-appwrite"
+import { ID, Query } from "node-appwrite"
 import { cookies } from "next/headers"
 import { extractCustomerIdFromUrl, parseStringify } from "../utils"
-import { AppwriteUser } from "@/types/appwrite"
 import { CountryCode, LinkTokenCreateRequest, ProcessorTokenCreateRequest, ProcessorTokenCreateRequestProcessorEnum, Products } from "plaid"
 import { plaidClient } from "../plaid"
 import { revalidatePath } from "next/cache"
@@ -16,7 +15,7 @@ const APPWRITE_SESSION_COOKIE = "appwrite-session";
 const { APPWRITE_DATABASE_ID } = process.env;
 
 export const signIn = async (data: z.infer<typeof signInSchema>) => {
-    const { account } = await createAdminClient();
+    const { account, tablesDB } = await createAdminClient();
     const response = await account.createEmailPasswordSession(data);
 
     (await cookies()).set(APPWRITE_SESSION_COOKIE, response.secret, {
@@ -25,7 +24,18 @@ export const signIn = async (data: z.infer<typeof signInSchema>) => {
         sameSite: "strict",
         secure: true,
     });
-    return parseStringify(response);
+
+    const userRows = await tablesDB.listRows({
+        databaseId: APPWRITE_DATABASE_ID!,
+        tableId: "users",
+        queries: [Query.equal("userId", response.userId)]
+    })
+
+    if (!userRows || userRows.total === 0) {
+        throw Error("No database user found for this account!");
+    }
+
+    return parseStringify(userRows.rows[0]);
 }
 
 export const signUp = async (data: z.infer<typeof signUpSchema>) => {
@@ -103,17 +113,18 @@ export async function logout() {
     await account.deleteSession({ sessionId: "current" });
 }
 
-export async function createLinkToken(user: AppwriteUser) {
+export async function createLinkToken(user: User) {
     try {
         const tokenParams: LinkTokenCreateRequest = {
             user: {
                 client_user_id: user.$id
             },
-            client_name: user.name,
+            client_name: user.firstName + " " + user.lastName,
             products: [Products.Auth],
             language: "en",
             country_codes: [CountryCode.Us]
         }
+
         const response = await plaidClient.linkTokenCreate(tokenParams);
         return parseStringify({ linkToken: response.data.link_token });
     } catch (err) {
@@ -140,7 +151,7 @@ export async function createBankAccount(data: CreateBankAccountProps) {
         });
         return bankAccount;
     } catch (err) {
-        console.log("An error occured while creating bank account")
+        console.log("An error occured while creating bank account", err)
     }
 }
 
@@ -175,7 +186,9 @@ export async function exchangePublicToken({ publicToken, user }: ExchangePublicT
             processorToken,
             bankName: accountData.name
         });
+
         if (!fundingSourceUrl) throw Error;
+
         await createBankAccount({
             userId: user.$id,
             bankId: itemId,

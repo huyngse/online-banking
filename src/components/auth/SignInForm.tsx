@@ -20,13 +20,11 @@ import { signInSchema } from "@/schemas";
 import { Loader2 } from "lucide-react";
 import { PasswordInput } from "../shared/PasswordInput";
 import { signIn } from "@/lib/actions/user.actions";
-import { useRouter } from "next/navigation";
 import PlaidLink from "./PlaidLink";
 
 const SignInForm = () => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<User>();
   const [loading, setLoading] = useState(false);
-  const router = useRouter();
 
   const form = useForm<z.infer<typeof signInSchema>>({
     resolver: zodResolver(signInSchema),
