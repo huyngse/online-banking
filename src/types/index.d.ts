@@ -14,7 +14,7 @@ declare type User = {
     ssn: string;
 }
 
-declare type Account = {
+declare type PlaidAccount = {
     id: string;
     availableBalance: number;
     currentBalance: number;
@@ -46,7 +46,7 @@ declare type Transaction = {
     receiverBankId: string;
 }
 
-declare type Bank = {
+declare type BankAccount = {
     $id: string;
     accountId: string;
     bankId: string;

@@ -3,7 +3,7 @@
 import { signInSchema, signUpSchema } from "@/schemas"
 import z from "zod"
 import { createAdminClient, createSessionClient } from "../server/appwrite"
-import { ID, Query } from "node-appwrite"
+import { ID, Models, Query } from "node-appwrite"
 import { cookies } from "next/headers"
 import { extractCustomerIdFromUrl, parseStringify } from "../utils"
 import { CountryCode, LinkTokenCreateRequest, ProcessorTokenCreateRequest, ProcessorTokenCreateRequestProcessorEnum, Products } from "plaid"
@@ -15,7 +15,7 @@ const APPWRITE_SESSION_COOKIE = "appwrite-session";
 const { APPWRITE_DATABASE_ID } = process.env;
 
 export const signIn = async (data: z.infer<typeof signInSchema>) => {
-    const { account, tablesDB } = await createAdminClient();
+    const { account } = await createAdminClient();
     const response = await account.createEmailPasswordSession(data);
 
     (await cookies()).set(APPWRITE_SESSION_COOKIE, response.secret, {
@@ -25,17 +25,12 @@ export const signIn = async (data: z.infer<typeof signInSchema>) => {
         secure: true,
     });
 
-    const userRows = await tablesDB.listRows({
-        databaseId: APPWRITE_DATABASE_ID!,
-        tableId: "users",
-        queries: [Query.equal("userId", response.userId)]
-    })
-
-    if (!userRows || userRows.total === 0) {
+    const user = await getUserByAuthId(response.userId);
+    if (!user) {
         throw Error("No database user found for this account!");
     }
 
-    return parseStringify(userRows.rows[0]);
+    return parseStringify(user);
 }
 
 export const signUp = async (data: z.infer<typeof signUpSchema>) => {
@@ -204,4 +199,46 @@ export async function exchangePublicToken({ publicToken, user }: ExchangePublicT
     } catch (err) {
         console.log("An error occured while creating exchanging token: ", err)
     }
+}
+
+export async function getBanks({ userId }: { userId: string }) {
+    try {
+        const { tablesDB } = await createAdminClient();
+        const banks = await tablesDB.listRows({
+            databaseId: APPWRITE_DATABASE_ID!,
+            tableId: "banks",
+            queries: [Query.equal("userId", userId)]
+        });
+
+        return parseStringify(banks.rows);
+    } catch (err) {
+        console.log("An error occured while getting banks from user ID", err);
+    }
+}
+
+export async function getBank({ rowId }: { rowId: string }) {
+    try {
+        const { tablesDB } = await createAdminClient();
+        const bank = await tablesDB.listRows({
+            databaseId: APPWRITE_DATABASE_ID!,
+            tableId: "banks",
+            queries: [Query.equal("$id", rowId)]
+        });
+
+        return parseStringify(bank.rows[0]);
+    } catch (err) {
+        console.log("An error occured while getting banks from user ID", err);
+    }
+}
+
+export async function getUserByAuthId(id: string) {
+    const { tablesDB } = await createAdminClient();
+
+    const userRows = await tablesDB.listRows<User & Models.Row>({
+        databaseId: APPWRITE_DATABASE_ID!,
+        tableId: "users",
+        queries: [Query.equal("userId", id)]
+    });
+
+    return userRows.rows[0] as User;
 }
