@@ -92,10 +92,11 @@ export const signUp = async (data: z.infer<typeof signUpSchema>) => {
     }
 }
 
-export async function getLoggedInUser() {
+export async function getLoggedInUser(): Promise<User | null> {
     try {
         const { account } = await createSessionClient();
-        const user = await account.get();
+        const authUser = await account.get();
+        const user = await getUserByAuthId(authUser.$id);
         return parseStringify(user);
     } catch (err) {
         return null;
@@ -115,7 +116,7 @@ export async function createLinkToken(user: User) {
                 client_user_id: user.$id
             },
             client_name: user.firstName + " " + user.lastName,
-            products: [Products.Auth],
+            products: [Products.Auth, Products.Transactions],
             language: "en",
             country_codes: [CountryCode.Us]
         }

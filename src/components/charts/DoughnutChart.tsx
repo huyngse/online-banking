@@ -10,7 +10,7 @@ import { Doughnut } from "react-chartjs-2";
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 interface DoughnutChartProps {
-  accounts: Account[];
+  accounts: PlaidAccount[];
 }
 
 function DoughnutChart({ accounts }: DoughnutChartProps) {

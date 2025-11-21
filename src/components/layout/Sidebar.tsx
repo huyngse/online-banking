@@ -8,7 +8,7 @@ import { usePathname } from "next/navigation";
 import Footer from "./Footer";
 
 interface SidebarProps {
-  user: AppwriteUser;
+  user: User;
 }
 
 function Sidebar({ user }: SidebarProps) {
