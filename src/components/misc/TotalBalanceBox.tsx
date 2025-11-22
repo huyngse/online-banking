@@ -2,7 +2,7 @@ import AnimatedCounter from "../shared/AnimatedCounter";
 import DoughnutChart from "../charts/DoughnutChart";
 
 interface TotalBalanceBoxProps {
-  accounts: Account[];
+  accounts: PlaidAccount[];
   totalBanks: number;
   totalCurrentBalance: number;
 }

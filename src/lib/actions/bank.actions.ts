@@ -69,7 +69,7 @@ interface GetAccountProps {
 
 // Get one bank account
 export const getAccount = async ({ appwriteItemId }: GetAccountProps)
-    : Promise<{ data: PlaidAccount } | undefined> => {
+    : Promise<{ data: PlaidAccount, transactions: Transaction[] } | undefined> => {
     try {
         // get bank from db
         const bank = await getBank({ rowId: appwriteItemId });
