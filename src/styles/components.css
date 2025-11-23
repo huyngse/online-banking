@@ -129,6 +129,10 @@
     @apply gap-[18px] flex p-4 transition-all border bg-blue-25 border-transparent;
   }
 
+  .bank-info_content {
+    @apply flex flex-1 items-center justify-between gap-2 overflow-hidden;
+  }
+
   .auth-form {
     @apply flex min-h-screen w-full max-w-[420px] flex-col justify-center gap-5 py-10 md:gap-8;
   }
@@ -167,5 +171,25 @@
 
   .plaidlink-default {
     @apply flex justify-start! gap-3 rounded-lg bg-transparent! flex-row;
+  }
+
+  .recent-transactions {
+    @apply flex flex-col gap-6;
+  }
+
+  .recent-transactions-label {
+    @apply text-20 md:text-24 font-semibold text-gray-900;
+  }
+
+  .recent-transactions-tablist {
+    @apply custom-scrollbar mb-8 flex w-full flex-nowrap;
+  }
+
+  .view-all-btn {
+    @apply text-14 rounded-lg border border-gray-300 px-4 py-2.5 font-semibold text-gray-700;
+  }
+
+  .banktab-item {
+    @apply gap-[18px] border-b-2 flex px-2 sm:px-4 py-2 transition-all;
   }
 }

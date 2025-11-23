@@ -4,6 +4,7 @@ import TotalBalanceBox from "@/components/misc/TotalBalanceBox";
 import { getLoggedInUser } from "@/lib/actions/user.actions";
 import { redirect } from "next/navigation";
 import { getAccount, getAccounts } from "@/lib/actions/bank.actions";
+import RecentTransactions from "@/components/misc/RecentTransactions";
 
 export default async function Home(props: SearchParamProps) {
   const { id, page } = await props.searchParams;
@@ -39,7 +40,12 @@ export default async function Home(props: SearchParamProps) {
             totalCurrentBalance={accounts.totalCurrentBalance}
           />
         </header>
-        RECENT TRANSACTIONS
+        <RecentTransactions
+          accounts={accounts.data}
+          transactions={account?.transactions ?? []}
+          appwriteItemId={appwriteItemId}
+          page={Number(page) || 1}
+        />
       </div>
       <RightSidebar
         user={loggedIn}

@@ -18,7 +18,7 @@ declare type PlaidAccount = {
     id: string;
     availableBalance: number;
     currentBalance: number;
-    officialName: string;
+    officialName: string | null;
     mask: string;
     institutionId: string;
     name: string;

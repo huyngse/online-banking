@@ -21,7 +21,7 @@ export const getAccounts = async ({ userId }: { userId: string })
         // get banks from db
         const banks = await getBanks({ userId });
 
-        const accounts = await Promise.all(
+        const accounts: PlaidAccount[] = await Promise.all(
             banks?.map(async (bank: BankAccount) => {
                 // get each account info from plaid
                 const accountsResponse = await plaidClient.accountsGet({
@@ -34,7 +34,7 @@ export const getAccounts = async ({ userId }: { userId: string })
                     institutionId: accountsResponse.data.item.institution_id!,
                 });
 
-                const account = {
+                const account: PlaidAccount = {
                     id: accountData.account_id,
                     availableBalance: accountData.balances.available!,
                     currentBalance: accountData.balances.current!,
@@ -106,7 +106,7 @@ export const getAccount = async ({ appwriteItemId }: GetAccountProps)
             accessToken: bank.accessToken,
         });
 
-        const account = {
+        const account: PlaidAccount = {
             id: accountData.account_id,
             availableBalance: accountData.balances.available!,
             currentBalance: accountData.balances.current!,
@@ -117,6 +117,7 @@ export const getAccount = async ({ appwriteItemId }: GetAccountProps)
             type: accountData.type as string,
             subtype: accountData.subtype! as string,
             appwriteItemId: bank.$id,
+            shareableId: bank.shareableId,
         };
 
         // sort transactions by date such that the most recent transaction is first
