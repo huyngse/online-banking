@@ -82,7 +82,7 @@
   }
 
   .right-sidebar {
-    @apply no-scrollbar hidden h-screen max-h-screen flex-col border-l border-gray-200 xl:flex w-[355px] xl:overflow-y-scroll;
+    @apply no-scrollbar hidden h-screen max-h-screen flex-col border-l border-gray-200 2xl:flex w-[355px] 2xl:overflow-y-scroll;
   }
 
   .profile-banner {
@@ -182,7 +182,7 @@
   }
 
   .recent-transactions-tablist {
-    @apply custom-scrollbar mb-8 flex w-full flex-nowrap;
+    @apply custom-scrollbar mb-5 flex w-full flex-nowrap;
   }
 
   .view-all-btn {

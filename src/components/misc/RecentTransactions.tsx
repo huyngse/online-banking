@@ -3,6 +3,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "../ui/button";
 import { BankTabItem } from "./BankTabItem";
 import BankInfo from "./BankInfo";
+import TransactionsTable from "./TransactionsTable";
 
 interface RecentTransactionsProps {
   accounts: PlaidAccount[];
@@ -50,6 +51,7 @@ const RecentTransactions = ({
               appwriteItemId={a.appwriteItemId}
               type="full"
             />
+            <TransactionsTable transactions={transactions} />
           </TabsContent>
         ))}
       </Tabs>

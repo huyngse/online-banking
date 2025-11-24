@@ -175,13 +175,13 @@ export const getTransactions = async ({
 
             transactions = response.data.added.map((transaction) => ({
                 id: transaction.transaction_id,
-                name: transaction.name,
+                name: transaction.name ,
                 paymentChannel: transaction.payment_channel,
                 type: transaction.payment_channel,
                 accountId: transaction.account_id,
                 amount: transaction.amount,
                 pending: transaction.pending,
-                category: transaction.category ? transaction.category[0] : "",
+                category: transaction.personal_finance_category  ? transaction.personal_finance_category.primary : "",
                 date: transaction.date,
                 image: transaction.logo_url,
             }));
