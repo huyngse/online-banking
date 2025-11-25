@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 interface CreditCardProps {
-  account: Account;
+  account: PlaidAccount;
   username: string;
   showBalance?: boolean;
 }

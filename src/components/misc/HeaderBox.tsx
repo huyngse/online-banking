@@ -1,7 +1,7 @@
 interface HeaderBoxProps {
   type?: "title" | "greeting";
   title: string;
-  user: string;
+  user?: string;
   subtext?: string;
 }
 
