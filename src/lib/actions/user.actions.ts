@@ -232,6 +232,22 @@ export async function getBank({ rowId }: { rowId: string }) {
     }
 }
 
+export async function getBankByAccountId({ accountId }: { accountId: string }): Promise<BankAccount | null> {
+    try {
+        const { tablesDB } = await createAdminClient();
+        const bank = await tablesDB.listRows({
+            databaseId: APPWRITE_DATABASE_ID!,
+            tableId: "banks",
+            queries: [Query.equal("accountId", accountId)]
+        });
+
+        return parseStringify(bank.rows[0]);
+    } catch (err) {
+        console.log("An error occured while getting banks from account ID", err);
+        return null;
+    }
+}
+
 export async function getUserByAuthId(id: string) {
     const { tablesDB } = await createAdminClient();
 
