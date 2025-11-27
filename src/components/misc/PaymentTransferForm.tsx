@@ -26,9 +26,9 @@ import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
 
 const formSchema = z.object({
-  email: z.email("Invalid email address"),
+  email: z.email("Invalid email address").optional(),
   name: z.string().min(4, "Transfer note is too short"),
-  amount: z.string().min(4, "Amount is too short"),
+  amount: z.number(),
   senderBank: z.string().min(4, "Please select a valid bank account"),
   sharableId: z.string().min(8, "Please select a valid sharable Id"),
 });
@@ -48,7 +48,7 @@ const PaymentTransferForm = ({ accounts }: PaymentTransferFormProps) => {
     defaultValues: {
       name: "",
       email: "",
-      amount: "",
+      amount: 0,
       senderBank: "",
       sharableId: "",
     },
@@ -72,7 +72,7 @@ const PaymentTransferForm = ({ accounts }: PaymentTransferFormProps) => {
       const transferParams = {
         sourceFundingSourceUrl: senderBank.fundingSourceUrl,
         destinationFundingSourceUrl: receiverBank.fundingSourceUrl,
-        amount: data.amount,
+        amount: data.amount + "",
       };
       // create transfer
       const transfer = await createTransfer(transferParams);
@@ -81,8 +81,8 @@ const PaymentTransferForm = ({ accounts }: PaymentTransferFormProps) => {
       if (transfer) {
         const transaction = {
           name: data.name,
-          amount: data.amount,
-          senderId: senderBank.userId.$id,
+          amount: data.amount + "",
+          senderId: senderBank.userId,
           senderBankId: senderBank.$id,
           receiverId: receiverBank.userId,
           receiverBankId: receiverBank.$id,
