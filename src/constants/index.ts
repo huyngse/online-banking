@@ -50,7 +50,7 @@ export const ITEMS = [
 ];
 
 export const topCategoryStyles = {
-  "Food and Drink": {
+  "FOOD_AND_DRINK": {
     bg: "bg-blue-25",
     circleBg: "bg-blue-100",
     text: {
@@ -63,7 +63,7 @@ export const topCategoryStyles = {
     },
     icon: "/icons/monitor.svg",
   },
-  Travel: {
+  TRAVEL: {
     bg: "bg-success-25",
     circleBg: "bg-success-100",
     text: {

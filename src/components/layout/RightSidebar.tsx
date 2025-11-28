@@ -1,6 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import CreditCard from "../misc/CreditCard";
+import { countTransactionCategories } from "@/lib/utils";
+import Category from "../shared/Category";
 
 interface RightSidebarProps {
   user: User;
@@ -9,6 +11,8 @@ interface RightSidebarProps {
 }
 
 function RightSidebar({ user, transactions, banks }: RightSidebarProps) {
+  const categories: CategoryCount[] = countTransactionCategories(transactions);
+
   return (
     <aside className="right-sidebar">
       <section className="flex flex-col pb-8">
@@ -57,6 +61,14 @@ function RightSidebar({ user, transactions, banks }: RightSidebarProps) {
             )}
           </div>
         )}
+        <div className="mt-10 flex flex-1 flex-col gap-6">
+          <h2 className="header-2">Top categories</h2>
+          <div className="space-y-5">
+            {categories.map((category, index: number) => (
+              <Category key={category.name} category={category} />
+            ))}
+          </div>
+        </div>
       </section>
     </aside>
   );
