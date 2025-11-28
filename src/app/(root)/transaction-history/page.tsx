@@ -1,4 +1,5 @@
 import HeaderBox from "@/components/misc/HeaderBox";
+import { Pagination } from "@/components/misc/Pagination";
 import TransactionsTable from "@/components/misc/TransactionsTable";
 import { getAccount, getAccounts } from "@/lib/actions/bank.actions";
 import { getLoggedInUser } from "@/lib/actions/user.actions";
@@ -6,7 +7,9 @@ import { formatAmount } from "@/lib/utils";
 import { redirect } from "next/navigation";
 
 async function TransactionHistory(props: SearchParamProps) {
-  const { id, page } = await props.searchParams;
+  const { id, page = 1 } = await props.searchParams;
+  const pageSize = 10;
+
   const loggedIn = await getLoggedInUser();
 
   if (!loggedIn) {
@@ -22,6 +25,13 @@ async function TransactionHistory(props: SearchParamProps) {
   const appwriteItemId = (id as string) || accounts.data[0].appwriteItemId;
 
   const account = await getAccount({ appwriteItemId });
+
+  const totalPages = Math.ceil(account?.transactions.length ?? 0 / pageSize);
+
+  const offset = pageSize * (Number(page) - 1);
+  const paginated =
+    account?.transactions.slice(offset, offset + pageSize) ?? [];
+
   return (
     <section className="transactions">
       <div className="transactions-header">
@@ -53,6 +63,10 @@ async function TransactionHistory(props: SearchParamProps) {
 
         <section className="w-full flex flex-col gap-6">
           <TransactionsTable transactions={account?.transactions || []} />
+          <TransactionsTable transactions={paginated} />
+          {totalPages > 1 && (
+            <Pagination page={Number(page)} totalPages={totalPages} />
+          )}
         </section>
       </div>
     </section>

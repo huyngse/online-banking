@@ -4,6 +4,7 @@ import { Button } from "../ui/button";
 import { BankTabItem } from "./BankTabItem";
 import BankInfo from "./BankInfo";
 import TransactionsTable from "./TransactionsTable";
+import { Pagination } from "./Pagination";
 
 interface RecentTransactionsProps {
   accounts: PlaidAccount[];
@@ -18,6 +19,12 @@ const RecentTransactions = ({
   page = 1,
   appwriteItemId,
 }: RecentTransactionsProps) => {
+  const pageSize = 10;
+  const totalPages = Math.ceil(transactions.length / pageSize);
+
+  const offset = pageSize * (page - 1);
+  const paginated = transactions.slice(offset, offset + pageSize);
+
   return (
     <section className="recent-transactions">
       <header className="flex items-center justify-between">
@@ -51,7 +58,10 @@ const RecentTransactions = ({
               appwriteItemId={a.appwriteItemId}
               type="full"
             />
-            <TransactionsTable transactions={transactions} />
+            <TransactionsTable transactions={paginated} />
+            {totalPages > 1 && (
+              <Pagination page={page} totalPages={totalPages} />
+            )}
           </TabsContent>
         ))}
       </Tabs>
