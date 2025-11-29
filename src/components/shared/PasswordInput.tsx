@@ -32,9 +32,9 @@ export const PasswordInput: React.FC<PasswordInputProps> = React.forwardRef<
         aria-label={showPassword ? "Hide password" : "Show password"}
       >
         {showPassword ? (
-          <EyeOffIcon className="w-4 h-4" />
+          <EyeOffIcon className="w-4 h-4 text-slate-500" />
         ) : (
-          <EyeIcon className="w-4 h-4" />
+          <EyeIcon className="w-4 h-4 text-slate-500" />
         )}
       </Button>
     </div>
