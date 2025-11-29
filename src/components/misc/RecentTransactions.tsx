@@ -4,7 +4,7 @@ import { Button } from "../ui/button";
 import { BankTabItem } from "./BankTabItem";
 import BankInfo from "./BankInfo";
 import TransactionsTable from "./TransactionsTable";
-import { Pagination } from "./Pagination";
+import { Pagination } from "../shared/Pagination";
 
 interface RecentTransactionsProps {
   accounts: PlaidAccount[];

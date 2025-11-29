@@ -70,7 +70,7 @@ function PlaidLink({ user, variant }: PlaidLinkProps) {
           <p className="hidden text-[16px] font-semibold text-black-2 xl:block">Connect bank</p>
         </Button>
       ) : (
-        <Button className="plaidlink-default" onClick={() => open()}>
+        <Button className="plaidlink-default w-full" onClick={() => open()}>
           <Image
             src="/icons/connect-bank.svg"
             alt="Connect bank"

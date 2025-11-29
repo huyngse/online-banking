@@ -1,5 +1,5 @@
 import HeaderBox from "@/components/misc/HeaderBox";
-import { Pagination } from "@/components/misc/Pagination";
+import { Pagination } from "@/components/shared/Pagination";
 import TransactionsTable from "@/components/misc/TransactionsTable";
 import { getAccount, getAccounts } from "@/lib/actions/bank.actions";
 import { getLoggedInUser } from "@/lib/actions/user.actions";
